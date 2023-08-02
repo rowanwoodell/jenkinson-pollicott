@@ -3,6 +3,7 @@ import math
 import itertools
 from scipy.optimize import root_scalar
 
+
 class SequenceLookup:
     def __init__(self, parent, power):
         self.parent = parent
@@ -219,14 +220,14 @@ def est(s, N, partitions, weights):
     return sum
 
 
-alph = ['1', '2']
-N = 10
+alph = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+N = 6
 acc = 100
 # s_N = 0.5306685908375786932401360892819672638338139332442
 
 
 lookup = get_full_lookup(alph, N, acc)
-print(lookup[2])
+# print(lookup[2])
 
 
 partitions = [r_tuples(k) for k in range(0, (N // 2) + 1)]
