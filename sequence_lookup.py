@@ -314,25 +314,28 @@ acc = 200
 print("family=", alph)
 print("acc =", acc)
 
-for N in range(2, 17, 2):
-    time_start = time.time()
+# for N in range(16,16):
 
-    lookup = get_full_lookup(alph, N, acc)
+N = 10
 
-    partitions = [r_tuples(k) for k in range(0, (N // 2) + 1)]
+time_start = time.time()
 
-    weights = [[l[s].weight for s in l] for l in lookup]
-    
-    def est(s, N=N, partitions=partitions, weights=weights):
-        C_n =  [C(s, n, weights[n]) for n in range(N + 1)]
-        sum = mp.mpf(1)
-        for k in range(1, (N // 2) + 1):
-            sum = mp.fadd(sum, b(s, k, partitions, C_n))
-        return sum
-    
-    print("N =", N)
-    mp.nprint(mp.findroot(est, (0.5, 1), solver="ridder"), mp.dps)
+lookup = get_full_lookup(alph, N, acc)
 
-    time_end = time.time()
+partitions = [r_tuples(k) for k in range(0, (N // 2) + 1)]
 
-    print("time:", time_end - time_start, "seconds")
+weights = [[l[s].weight for s in l] for l in lookup]
+
+def est(s, N=N, partitions=partitions, weights=weights):
+    C_n =  [C(s, n, weights[n]) for n in range(N + 1)]
+    sum = mp.mpf(1)
+    for k in range(1, (N // 2) + 1):
+        sum = mp.fadd(sum, b(s, k, partitions, C_n))
+    return sum
+
+print("N =", N)
+mp.nprint(mp.findroot(est, (0, 1), solver="ridder", verbose=True), mp.dps)
+
+time_end = time.time()
+
+print("time:", time_end - time_start, "seconds")
